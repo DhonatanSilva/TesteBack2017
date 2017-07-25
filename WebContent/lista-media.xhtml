@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Listar com média</title>
+</h:head>
+<body>
+
+	<a href="index.xhtml">Início</a>
+
+	<h1>Lista de clientes com média dos valores</h1>
+	<h:form>
+
+		<h:messages />
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Id" />
+			<h:inputText value="#{controllerCustomer.customer.id_customer}"
+				readonly="true" />
+			<h:outputLabel value="Nome" />
+			<h:inputText value="#{controllerCustomer.customer.nm_customer}" />
+			<h:outputLabel value="CPF/CNPJ" for="cpf" />
+			<h:inputText value="#{controllerCustomer.customer.cpf_cnpj}"
+				size="11" id="cpf" />
+			<h:outputLabel value="Valor Total" />
+			<h:inputText value="#{controllerCustomer.customer.vl_total}" />
+			<h:outputLabel value="Ativo?" />
+			<h:selectBooleanCheckbox
+				value="#{controllerCustomer.customer.is_active}" />
+			<h:commandButton
+				action="#{controllerCustomer.gravar(controllerCustomer.customer)}"
+				value="Salvar" />
+		</h:panelGrid>
+	</h:form>
+
+	<h:dataTable value="#{controllerCustomer.dao.listarTodos2()}" var="obj"
+		rules="all" frame="box" cellpadding="3">
+
+		<h:column>
+			<f:facet name="header">Id</f:facet>    				
+      #{obj.id_customer}
+   </h:column>
+		<h:column>
+			<f:facet name="header">Nome</f:facet>    				
+      #{obj.nm_customer}
+   </h:column>
+		<h:column>
+			<f:facet name="header">CPF/CNPJ</f:facet>    				
+      #{obj.cpf_cnpj}
+   </h:column>
+		<h:column>
+			<f:facet name="header">Valor Total</f:facet>    				
+      #{obj.vl_total}
+   </h:column>
+		<h:column>
+			<f:facet name="header">Status</f:facet>    				
+     #{obj.is_active?"SIM":"NÃO"}
+   </h:column>
+	</h:dataTable>
+
+
+
+	<p>média do campo vl_total apenas para os itens que este valor seja
+		maior que 560 e o campo id_customer esteja entre 1500 e 2700.</p>
+	
+	<h:outputLabel value="Média" />
+	<h:outputLabel value="#{controllerCustomer.dao.calculoMedia()}"/>
+
+</body>
+</html>
